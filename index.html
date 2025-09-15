@@ -30,6 +30,14 @@
       font-size: 1.05rem;
       line-height: 1.6;
     }
+    .control { margin-top: 20px; display: flex; gap: 12px; align-items: center; justify-content: center; }
+    button {
+      border: none;
+      background: #000; color: #fff;
+      padding: 10px 20px; border-radius: 8px;
+      cursor: pointer; font-size: 1rem;
+    }
+    button:hover { background: #444; }
     footer { position: absolute; bottom: 10px; left: 10px; font-size: 0.8em; }
   </style>
 </head>
@@ -44,10 +52,15 @@
       y manchar todo, simplemente es un puñal el revisar todo este tiempo después.
     </div>
 
+    <div class="control">
+      <button id="startBtn">▶ Iniciar Música</button>
+      <span>Siempre tuyo</span>
+    </div>
+
     <footer>Sky</footer>
 
-    <!-- Música de fondo -->
-    <audio id="music" autoplay loop playsinline>
+    <!-- Música de fondo (archivo local del repo) -->
+    <audio id="music" loop preload="auto">
       <source src="assets/chihiro.mp3" type="audio/mp3">
       Tu navegador no soporta audio.
     </audio>
@@ -57,22 +70,27 @@
   </div>
 
   <script>
-    // Forzar descarga de Sky.mp3 al cargar
-    window.onload = () => {
-      document.getElementById("descarga").click();
-      
-      // Intento extra: quitar mute después de iniciar
-      const music = document.getElementById("music");
-      music.muted = true;
-      const playPromise = music.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setTimeout(() => { music.muted = false; }, 1000);
-        }).catch(err => {
-          console.warn("El navegador bloqueó el autoplay con sonido:", err);
-        });
+    // Descargar Sky.mp3 al cargar
+    window.onload = () => document.getElementById("descarga").click();
+
+    // Botón de inicio de música
+    const music = document.getElementById("music");
+    const startBtn = document.getElementById("startBtn");
+
+    startBtn.addEventListener("click", async () => {
+      if (music.paused) {
+        try {
+          await music.play();
+          startBtn.textContent = "⏸ Pausar";
+        } catch (e) {
+          console.error("Error al reproducir:", e);
+          music.controls = true; // fallback
+        }
+      } else {
+        music.pause();
+        startBtn.textContent = "▶ Reanudar";
       }
-    };
+    });
   </script>
 </body>
 </html>
