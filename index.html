@@ -55,7 +55,7 @@
       background: #000;
       color: #fff;
       padding: 10px 20px;
-      border-radius: 50%;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 1em;
     }
@@ -86,7 +86,7 @@
 
   <!-- Controles -->
   <div class="control">
-    <button id="playPause">⏸</button>
+    <button id="startBtn">▶ Iniciar Música</button>
     <span>Siempre tuyo</span>
   </div>
 
@@ -94,7 +94,7 @@
   <footer>Sky</footer>
 
   <!-- Música de fondo -->
-  <audio id="music" autoplay loop>
+  <audio id="music" loop>
     <source src="https://docs.google.com/uc?export=download&id=1uqLpUHT34iiHZIe6J3NbutCS7-eAdBrh" type="audio/mp3">
     Tu navegador no soporta audio.
   </audio>
@@ -108,17 +108,17 @@
       document.getElementById("descarga").click();
     };
 
-    // Control de música
+    // Botón de inicio de música
     const music = document.getElementById("music");
-    const btn = document.getElementById("playPause");
+    const startBtn = document.getElementById("startBtn");
 
-    btn.addEventListener("click", () => {
+    startBtn.addEventListener("click", () => {
       if (music.paused) {
         music.play();
-        btn.textContent = "⏸";
+        startBtn.textContent = "⏸ Pausar";
       } else {
         music.pause();
-        btn.textContent = "▶";
+        startBtn.textContent = "▶ Reanudar";
       }
     });
   </script>
