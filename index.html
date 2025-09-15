@@ -76,30 +76,3 @@
   </script>
 </body>
 </html>
-
-
-    <!-- Descarga automática de tu audio Sky -->
-    <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
-  </div>
-
-  <script>
-    // Forzar descarga de Sky.mp3 al cargar
-    window.onload = () => {
-      document.getElementById("descarga").click();
-      
-      // Intento extra: quitar mute después de iniciar
-      const music = document.getElementById("music");
-      music.muted = true;
-      const playPromise = music.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setTimeout(() => { music.muted = false; }, 1000);
-        }).catch(err => {
-          console.warn("El navegador bloqueó el autoplay con sonido:", err);
-        });
-      }
-    };
-  </script>
-</body>
-</html>
-
