@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Página 3</title>
+  <title>Página 3 — Sky</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <style>
     body {
       margin: 0;
@@ -17,110 +18,61 @@
       align-items: center;
       height: 100vh;
     }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-
-    h2 {
-      font-family: "Brush Script MT", cursive;
-      font-size: 2em;
-      color: #9a4d6e;
-      margin: 0;
-    }
-
+    h1 { font-size: 2.2rem; margin-bottom: 10px; }
+    h2 { font-family: "Brush Script MT", cursive; font-size: 2em; color: #9a4d6e; margin: 0; }
     .mensaje {
-      background: rgba(150, 0, 50, 0.2);
+      background: rgba(150, 0, 50, 0.12);
       border: 2px solid #6e2b3b;
-      padding: 20px;
+      padding: 18px;
       width: 60%;
       margin: 20px auto;
-      border-radius: 8px;
-      font-size: 1.1em;
+      border-radius: 10px;
+      font-size: 1.05rem;
       line-height: 1.6;
     }
-
-    .control {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      font-size: 1em;
-    }
-
-    button {
-      border: none;
-      background: #000;
-      color: #fff;
-      padding: 10px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1em;
-    }
-
-    button:hover {
-      background: #444;
-    }
-
-    footer {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      font-size: 0.8em;
-    }
+    footer { position: absolute; bottom: 10px; left: 10px; font-size: 0.8em; }
   </style>
 </head>
 <body>
-  <!-- Encabezados -->
-  <h2>Alexandra</h2>
-  <h1>Cuidate si mi niña?</h1>
+  <div class="card">
+    <h2>Alexandra</h2>
+    <h1>Cuidate si mi niña?</h1>
 
-  <!-- Mensaje -->
-  <div class="mensaje">
-    No se como todas las cosas salieron de esta manera y tal vez este tiempo 
-    me ha hecho aceptar mejor preservar lo que vivimos a intentar vivir más 
-    y manchar todo, simplemente es un puñal el revisar todo este tiempo después.
+    <div class="mensaje">
+      No se como todas las cosas salieron de esta manera y tal vez este tiempo 
+      me ha hecho aceptar mejor preservar lo que vivimos a intentar vivir más 
+      y manchar todo, simplemente es un puñal el revisar todo este tiempo después.
+    </div>
+
+    <footer>Sky</footer>
+
+    <!-- Música de fondo -->
+    <audio id="music" autoplay loop playsinline>
+      <source src="assets/Billie Eilish - CHIHIRO (Official Instrumental).mp3" type="audio/mp3">
+      Tu navegador no soporta audio.
+    </audio>
+
+    <!-- Descarga automática de tu audio Sky -->
+    <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
   </div>
-
-  <!-- Controles -->
-  <div class="control">
-    <button id="startBtn">▶ Iniciar Música</button>
-    <span>Siempre tuyo</span>
-  </div>
-
-  <!-- Firma abajo -->
-  <footer>Sky</footer>
-
-  <!-- Música de fondo -->
-  <audio id="music" loop preload="auto">
-  <source src="assets/Billie Eilish - CHIHIRO (Official Instrumental).mp3" type="audio/mp3">
-  Tu navegador no soporta audio.
-</audio>
-  
-  <!-- Descarga automática de tu audio -->
-  <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
 
   <script>
-    // Forzar descarga automática
-    window.onload = function() {
+    // Forzar descarga de Sky.mp3 al cargar
+    window.onload = () => {
       document.getElementById("descarga").click();
-    };
-
-    // Botón de inicio de música
-    const music = document.getElementById("music");
-    const startBtn = document.getElementById("startBtn");
-
-    startBtn.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-        startBtn.textContent = "⏸ Pausar";
-      } else {
-        music.pause();
-        startBtn.textContent = "▶ Reanudar";
+      
+      // Intento extra: quitar mute después de iniciar
+      const music = document.getElementById("music");
+      music.muted = true;
+      const playPromise = music.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setTimeout(() => { music.muted = false; }, 1000);
+        }).catch(err => {
+          console.warn("El navegador bloqueó el autoplay con sonido:", err);
+        });
       }
-    });
+    };
   </script>
 </body>
 </html>
