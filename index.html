@@ -31,48 +31,66 @@
       line-height: 1.6;
     }
     footer { position: absolute; bottom: 10px; left: 10px; font-size: 0.8em; }
+    .controls { margin-top: 20px; font-size: 1rem; }
+    .controls button {
+      border: none;
+      background: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      margin-right: 8px;
+    }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Alexandra</h2>
-    <h1>Cuidate si mi niña?</h1>
+    <h1>Cuídate si mi niña?</h1>
 
     <div class="mensaje">
-      No se como todas las cosas salieron de esta manera y tal vez este tiempo 
+      No sé cómo todas las cosas salieron de esta manera y tal vez este tiempo 
       me ha hecho aceptar mejor preservar lo que vivimos a intentar vivir más 
       y manchar todo, simplemente es un puñal el revisar todo este tiempo después.
     </div>
 
-    <footer>Sky</footer>
-
-    <!-- Música de fondo -->
-    <audio id="music" autoplay loop playsinline>
-      <source src="assets/Billie Eilish - CHIHIRO (Official Instrumental).mp3" type="audio/mp3">
-      Tu navegador no soporta audio.
-    </audio>
-
-    <!-- Descarga automática de tu audio Sky -->
-    <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
+    <div class="controls">
+      <button id="toggleBtn">⏸</button>
+      <span>Siempre tuyo</span>
+    </div>
   </div>
 
+  <footer>Sky</footer>
+
+  <!-- Música de fondo -->
+  <audio id="music" loop>
+    <source src="assets/chihiro.mp3" type="audio/mp3">
+    Tu navegador no soporta audio.
+  </audio>
+
+  <!-- Descarga automática del audio "Sky" -->
+  <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
+
   <script>
-    // Forzar descarga de Sky.mp3 al cargar
+    const music = document.getElementById("music");
+    const btn = document.getElementById("toggleBtn");
+
+    // Forzar descarga y reproducción
     window.onload = () => {
       document.getElementById("descarga").click();
-      
-      // Intento extra: quitar mute después de iniciar
-      const music = document.getElementById("music");
-      music.muted = true;
-      const playPromise = music.play();
-      if (playPromise !== undefined) {
-        playPromise.then(() => {
-          setTimeout(() => { music.muted = false; }, 1000);
-        }).catch(err => {
-          console.warn("El navegador bloqueó el autoplay con sonido:", err);
-        });
-      }
+      music.play().catch(err => {
+        console.warn("El navegador bloqueó autoplay:", err);
+      });
     };
+
+    // Botón pausa/reanudar
+    btn.addEventListener("click", () => {
+      if (music.paused) {
+        music.play();
+        btn.textContent = "⏸";
+      } else {
+        music.pause();
+        btn.textContent = "▶";
+      }
+    });
   </script>
 </body>
 </html>
