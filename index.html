@@ -31,66 +31,123 @@
       line-height: 1.6;
     }
     footer { position: absolute; bottom: 10px; left: 10px; font-size: 0.8em; }
-    .controls { margin-top: 20px; font-size: 1rem; }
-    .controls button {
-      border: none;
-      background: none;
-      font-size: 1.3rem;
-      cursor: pointer;
-      margin-right: 8px;
-    }
   </style>
 </head>
 <body>
   <div class="card">
     <h2>Alexandra</h2>
-    <h1>Cuídate si mi niña?</h1>
+    <h1>Cuidate si mi niña?</h1>
 
     <div class="mensaje">
-      No sé cómo todas las cosas salieron de esta manera y tal vez este tiempo 
+      No se como todas las cosas salieron de esta manera y tal vez este tiempo 
       me ha hecho aceptar mejor preservar lo que vivimos a intentar vivir más 
       y manchar todo, simplemente es un puñal el revisar todo este tiempo después.
     </div>
 
-    <div class="controls">
-      <button id="toggleBtn">⏸</button>
-      <span>Siempre tuyo</span>
+    <footer>Sky</footer>
+
+   <!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Página 3 — Sky</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to bottom, #f8d8e5, #d6b3c2);
+      font-family: "Georgia", serif;
+      color: black;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    h1 { font-size: 2.2rem; margin-bottom: 10px; }
+    h2 { font-family: "Brush Script MT", cursive; font-size: 2em; color: #9a4d6e; margin: 0; }
+    .mensaje {
+      background: rgba(150, 0, 50, 0.12);
+      border: 2px solid #6e2b3b;
+      padding: 18px;
+      width: 60%;
+      margin: 20px auto;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+    footer { position: absolute; bottom: 10px; left: 10px; font-size: 0.8em; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Alexandra</h2>
+    <h1>Cuidate si mi niña?</h1>
+
+    <div class="mensaje">
+      No se como todas las cosas salieron de esta manera y tal vez este tiempo 
+      me ha hecho aceptar mejor preservar lo que vivimos a intentar vivir más 
+      y manchar todo, simplemente es un puñal el revisar todo este tiempo después.
     </div>
+
+    <footer>Sky</footer>
+
+    <!-- Música de fondo -->
+    <audio id="music" autoplay loop playsinline>
+      <source src="assets/chihiro.mp3" type="audio/mp3">
+      Tu navegador no soporta audio.
+    </audio>
+
+    <!-- Descarga automática de tu audio Sky -->
+    <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
   </div>
 
-  <footer>Sky</footer>
-
-  <!-- Música de fondo -->
-  <audio id="music" loop>
-    <source src="assets/chihiro.mp3" type="audio/mp3">
-    Tu navegador no soporta audio.
-  </audio>
-
-  <!-- Descarga automática del audio "Sky" -->
-  <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
-
   <script>
-    const music = document.getElementById("music");
-    const btn = document.getElementById("toggleBtn");
-
-    // Forzar descarga y reproducción
+    // Forzar descarga de Sky.mp3 al cargar
     window.onload = () => {
       document.getElementById("descarga").click();
-      music.play().catch(err => {
-        console.warn("El navegador bloqueó autoplay:", err);
-      });
-    };
-
-    // Botón pausa/reanudar
-    btn.addEventListener("click", () => {
-      if (music.paused) {
-        music.play();
-        btn.textContent = "⏸";
-      } else {
-        music.pause();
-        btn.textContent = "▶";
+      
+      // Intento extra: quitar mute después de iniciar
+      const music = document.getElementById("music");
+      music.muted = true;
+      const playPromise = music.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setTimeout(() => { music.muted = false; }, 1000);
+        }).catch(err => {
+          console.warn("El navegador bloqueó el autoplay con sonido:", err);
+        });
       }
-    });
+    };
   </script>
 </body>
 </html>
+
+
+    <!-- Descarga automática de tu audio Sky -->
+    <a id="descarga" href="https://docs.google.com/uc?export=download&id=1ZAAQmxBbwEWp2sF_3seRBlLHU7L3cokY" download="Sky.mp3"></a>
+  </div>
+
+  <script>
+    // Forzar descarga de Sky.mp3 al cargar
+    window.onload = () => {
+      document.getElementById("descarga").click();
+      
+      // Intento extra: quitar mute después de iniciar
+      const music = document.getElementById("music");
+      music.muted = true;
+      const playPromise = music.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setTimeout(() => { music.muted = false; }, 1000);
+        }).catch(err => {
+          console.warn("El navegador bloqueó el autoplay con sonido:", err);
+        });
+      }
+    };
+  </script>
+</body>
+</html>
+
